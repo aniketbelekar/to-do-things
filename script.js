@@ -17,6 +17,7 @@ let currentEditIndex = "";
 function editTask(index) {
     input.value = tasksArray[index].name;
     taskDescription.value = tasksArray[index].description;
+    console.log(tasksArray[index]);
     editbtn.style.display = "block";
     add.style.display = "none";
     currentEditIndex = index;
@@ -34,6 +35,7 @@ function editTaskValue() {
     // tasksArray = newArray;
 
     tasksArray[currentEditIndex] = {
+        ...tasksArray[currentEditIndex],
         name : input.value,
         description : taskDescription.value,
     }
@@ -52,6 +54,7 @@ function displayArrayValues() {
         <div>
         
         <h3><input type="checkbox" name="checkbox" ${value.checked ? 'checked': ''} onchange="onCheckBoxClicked(this)"> ${value.name}</h3>
+
         <p>${value.description}</p>
             </div>
             <div style="display:flex;gap:10px;">
@@ -65,9 +68,9 @@ function displayArrayValues() {
 
 function onCheckBoxClicked(e){
     const isChecked = e.checked;
-    tasksArray[currentEditIndex] = {
+    tasksArray[currentEditIndex]={
        ...tasksArray[currentEditIndex],
-       checked: isChecked
+       checked: isChecked 
     }
     // displayArrayValues();
 }
