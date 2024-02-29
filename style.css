@@ -1,0 +1,167 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    height: 100vh;
+    background-color: rgb(113, 42, 228);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mcontainer {
+    height: 500px;
+    width: 600px;
+    background-color: rgba(0, 0, 0, 0.692);
+}
+
+.mcontainer h1 {
+    color: white;
+    text-align: center;
+    margin-top: 20px;
+}
+
+#taskInput {
+    padding: 20px;
+    height: 10px;
+    width: 60%;
+    background-color: rgba(0, 0, 0, 0.534);
+    border: none;
+    border: 0.5px solid blueviolet;
+    color: white;
+}
+
+.input {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.add {
+    padding: 20px;
+    height: 10px;
+    width: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: blueviolet;
+    color: white;
+    border: 0.5px solid blueviolet;
+}
+
+.homework {
+    display: flex;
+    justify-content: space-between;
+    margin: 10%;
+    height: 50px;
+    width: 80%;
+    background-color: blueviolet;
+    color: white;
+}
+
+img {
+    width: 30px;
+    height: 30px;
+}
+
+.homework img {
+    margin-top: 10px;
+}
+
+::placeholder {
+    color: white;
+    opacity: 0.5;
+    font-size: 15px;
+}
+
+.market {
+    display: flex;
+    justify-content: space-between;
+    margin: 10%;
+    height: 50px;
+    width: 80%;
+    background-color: blueviolet;
+    margin-top: -20px;
+}
+
+h2 {
+    color: white;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+    font-size: 15px;
+}
+
+h3 {
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+    font-size: 15px;
+}
+
+.tasks {
+    overflow: auto;
+    height: 350px;
+}
+
+
+
+
+
+
+
+.edit{
+    padding: 20px;
+    height: 10px;
+    width: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: blueviolet;
+    color: white;
+    border: 0.5px solid blueviolet;
+    display: none;
+}
+
+@media only screen and (max-width: 768px) {
+    .mcontainer {
+        width: 90%;
+    }
+
+    #taskInput {
+        width: 80%;
+    }
+
+    .add {
+        width: 30%;
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    .mcontainer {
+        width: 95%;
+    }
+
+    #taskInput {
+        width: 90%;
+    }
+
+    .add {
+        width: 40%;
+    }
+}
+.taskDescription{
+    padding: 20px;
+    height: 10px;
+    width: 60%;
+    background-color: rgba(0, 0, 0, 0.534);
+    border: none;
+    border: 0.5px solid blueviolet;
+    color: whit
+}

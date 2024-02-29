@@ -1,0 +1,16 @@
+const add = document.getElementById('add');
+const taskInput = document.getElementById('taskInput');
+const tasks = []; // Array to store tasks
+
+add.addEventListener('click', function() {
+    const task = taskInput.value.trim();
+
+    if (task !== '') {
+        tasks.push(task);
+        taskInput.value = ''; // Clear input field
+        console.log('Task added:', task);
+        console.log('Tasks:', tasks);
+    } else {
+        alert('Please enter a task!');
+    }
+});
