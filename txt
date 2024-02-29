@@ -1,32 +1,41 @@
-const add = document.getElementById('add');
-const editbtn = document.querySelector('.edit');
-const tasks = document.querySelector('.tasks');
-const input = document.getElementById('taskInput');
-const taskDescription = document.getElementById('taskDescription');
+// Load tasks from local storage if available
+const storedTasks = localStorage.getItem('tasksArray');
+if (storedTasks) {
+    tasksArray = JSON.parse(storedTasks);
+    displayArrayValues(); // Display tasks on page load
+}
 
-let tasksArray = [];
+// Function to save tasks array to local storage
+function saveTasksToLocalStorage() {
+    localStorage.setItem('tasksArray', JSON.stringify(tasksArray));
+}
 
+// Function to delete a task
 function deletetask(index) {
     tasksArray.splice(index, 1);
+    saveTasksToLocalStorage(); // Save tasks after deletion
     displayArrayValues();
 }
 
-let currentEditIndex = "";
-
+// Function to edit a task
 function editTask(index) {
     input.value = tasksArray[index].name;
     taskDescription.value = tasksArray[index].description;
+    console.log(tasksArray[index]);
     editbtn.style.display = "block";
     add.style.display = "none";
     currentEditIndex = index;
 }
 
+// Function to edit task value
 function editTaskValue() {
     tasksArray[currentEditIndex] = {
+        ...tasksArray[currentEditIndex],
         name: input.value,
-        description: taskDescription.value
+        description: taskDescription.value,
     };
 
+    saveTasksToLocalStorage(); // Save tasks after edit
     displayArrayValues();
     editbtn.style.display = "none";
     add.style.display = "block";
@@ -34,44 +43,27 @@ function editTaskValue() {
     taskDescription.value = "";
 }
 
-function displayArrayValues() {
-    let htmltasks = '';
-    tasksArray.forEach(function(value, index) {
-        const checkboxId = `task${index}`;
-        const checkedAttribute = value.checked ? 'checked' : '';
-        htmltasks += `<div class="homework">
-            <input type="checkbox" id="${checkboxId}" ${checkedAttribute} onchange="toggleTaskCompletion(${index})">
-            <label for="${checkboxId}">
-                <div>
-                    <h3>${value.name}</h3>
-                    <p>${value.description}</p>
-                </div>
-            </label>
-            <div style="display:flex;gap:10px;">
-                <img src="/delete.png" alt="" onclick="deletetask(${index})">
-                <img src="/pen.png" alt="" onclick="editTask(${index})">
-            </div>
-        </div>`;
-    });
-    tasks.innerHTML = htmltasks;
+// Function to handle checkbox click
+function onCheckBoxClicked(e) {
+    const index = e.parentElement.parentElement.dataset.index;
+    const isChecked = e.checked;
+    tasksArray[index].checked = isChecked;
+    saveTasksToLocalStorage(); // Save tasks after checkbox click
 }
 
-function toggleTaskCompletion(index) {
-    tasksArray[index].checked = !tasksArray[index].checked;
-    displayArrayValues();
-}
-
+// Function to add a task
 function addTask() {
     if (input.value !== '') {
         tasksArray.push({
             name: input.value,
             description: taskDescription.value,
-            checked: false
+            checked: false,
         });
+        saveTasksToLocalStorage(); // Save tasks after addition
         input.value = '';
         taskDescription.value = '';
+        displayArrayValues();
     }
-    displayArrayValues();
 }
 
 add.addEventListener('click', addTask);

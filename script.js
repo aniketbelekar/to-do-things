@@ -49,11 +49,12 @@ function editTaskValue() {
 
 function displayArrayValues() {
     let htmltasks = '';
+    saveToLocalStorage();
     tasksArray.forEach(function(value, index) {
         htmltasks += `<div class="homework">
         <div>
         
-        <h3><input type="checkbox" name="checkbox" ${value.checked ? 'checked': ''} onchange="onCheckBoxClicked(this)"> ${value.name}</h3>
+        <h3><input type="checkbox" name="checkbox" ${value.checked ? 'checked': ''} onchange="onCheckBoxClicked(this, ${index})"> ${value.name}</h3>
 
         <p>${value.description}</p>
             </div>
@@ -66,13 +67,21 @@ function displayArrayValues() {
     tasks.innerHTML = htmltasks;
 }
 
-function onCheckBoxClicked(e){
+function saveToLocalStorage(){
+    localStorage.setItem('mytasks', JSON.stringify(tasksArray))
+}
+function getArrayFromLocalStorage(){
+    const newArray = JSON.parse(localStorage.getItem('mytasks')) || [];
+    tasksArray = newArray;
+    displayArrayValues();
+}
+function onCheckBoxClicked(e,  index){
     const isChecked = e.checked;
-    tasksArray[currentEditIndex]={
-       ...tasksArray[currentEditIndex],
+    tasksArray[index]={
+       ...tasksArray[index],
        checked: isChecked 
     }
-    // displayArrayValues();
+    displayArrayValues();
 }
 function TaskCompletion(index) {
     tasksArray[index].checked = !tasksArray[index].checked;
@@ -95,3 +104,5 @@ function addTask() {
 
 add.addEventListener('click', addTask);
 editbtn.addEventListener('click', editTaskValue);
+
+getArrayFromLocalStorage();
