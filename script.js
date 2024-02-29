@@ -3,6 +3,7 @@ const editbtn = document.querySelector('.edit');
 const tasks = document.querySelector('.tasks');
 const input = document.getElementById('taskInput');
 const taskDescription = document.getElementById('taskDescription');
+const checkbox = document.getElementById('checkbox')
 
 let tasksArray = [];
 
@@ -48,9 +49,10 @@ function displayArrayValues() {
     let htmltasks = '';
     tasksArray.forEach(function(value, index) {
         htmltasks += `<div class="homework">
-            <div>
-                <h3>${value.name}</h3>
-                <p>${value.description}</p>
+        <div>
+        
+        <h3><input type="checkbox" name="checkbox" ${value.checked ? 'checked': ''} onchange="onCheckBoxClicked(this)"> ${value.name}</h3>
+        <p>${value.description}</p>
             </div>
             <div style="display:flex;gap:10px;">
                 <img src="/delete.png" alt="" onclick="deletetask(${index})">
@@ -59,6 +61,19 @@ function displayArrayValues() {
         </div>`;
     });
     tasks.innerHTML = htmltasks;
+}
+
+function onCheckBoxClicked(e){
+    const isChecked = e.checked;
+    tasksArray[currentEditIndex] = {
+       ...tasksArray[currentEditIndex],
+       checked: isChecked
+    }
+    // displayArrayValues();
+}
+function TaskCompletion(index) {
+    tasksArray[index].checked = !tasksArray[index].checked;
+    displayArrayValues();
 }
 
 

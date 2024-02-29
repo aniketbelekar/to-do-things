@@ -22,15 +22,11 @@ function editTask(index) {
 }
 
 function editTaskValue() {
-    const newArray = [];
-    tasksArray.forEach(function(value, index) {
-        if (index === currentEditIndex) {
-            value.name = input.value;
-            value.description = taskDescription.value;
-        }
-        newArray.push(value);
-    });
-    tasksArray = newArray;
+    tasksArray[currentEditIndex] = {
+        name: input.value,
+        description: taskDescription.value
+    };
+
     displayArrayValues();
     editbtn.style.display = "none";
     add.style.display = "block";
@@ -41,23 +37,36 @@ function editTaskValue() {
 function displayArrayValues() {
     let htmltasks = '';
     tasksArray.forEach(function(value, index) {
+        const checkboxId = `task${index}`;
+        const checkedAttribute = value.checked ? 'checked' : '';
         htmltasks += `<div class="homework">
-        <h3>${value.name}</h3>
-        <p>${value.description}</p>
-        <div style="display:flex;gap:10px;">
-        <img src="/delete.png" alt="" onclick="deletetask(${index})">
-        <img src="/pen.png" alt="" onclick="editTask(${index})">
-        </div>
+            <input type="checkbox" id="${checkboxId}" ${checkedAttribute} onchange="toggleTaskCompletion(${index})">
+            <label for="${checkboxId}">
+                <div>
+                    <h3>${value.name}</h3>
+                    <p>${value.description}</p>
+                </div>
+            </label>
+            <div style="display:flex;gap:10px;">
+                <img src="/delete.png" alt="" onclick="deletetask(${index})">
+                <img src="/pen.png" alt="" onclick="editTask(${index})">
+            </div>
         </div>`;
     });
     tasks.innerHTML = htmltasks;
+}
+
+function toggleTaskCompletion(index) {
+    tasksArray[index].checked = !tasksArray[index].checked;
+    displayArrayValues();
 }
 
 function addTask() {
     if (input.value !== '') {
         tasksArray.push({
             name: input.value,
-            description: taskDescription.value
+            description: taskDescription.value,
+            checked: false
         });
         input.value = '';
         taskDescription.value = '';
