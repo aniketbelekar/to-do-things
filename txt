@@ -1,16 +1,69 @@
 const add = document.getElementById('add');
-const taskInput = document.getElementById('taskInput');
-const tasks = []; // Array to store tasks
+const editbtn = document.querySelector('.edit');
+const tasks = document.querySelector('.tasks');
+const input = document.getElementById('taskInput');
+const taskDescription = document.getElementById('taskDescription');
 
-add.addEventListener('click', function() {
-    const task = taskInput.value.trim();
+let tasksArray = [];
 
-    if (task !== '') {
-        tasks.push(task);
-        taskInput.value = ''; // Clear input field
-        console.log('Task added:', task);
-        console.log('Tasks:', tasks);
-    } else {
-        alert('Please enter a task!');
+function deletetask(index) {
+    tasksArray.splice(index, 1);
+    displayArrayValues();
+}
+
+let currentEditIndex = "";
+
+function editTask(index) {
+    input.value = tasksArray[index].name;
+    taskDescription.value = tasksArray[index].description;
+    editbtn.style.display = "block";
+    add.style.display = "none";
+    currentEditIndex = index;
+}
+
+function editTaskValue() {
+    const newArray = [];
+    tasksArray.forEach(function(value, index) {
+        if (index === currentEditIndex) {
+            value.name = input.value;
+            value.description = taskDescription.value;
+        }
+        newArray.push(value);
+    });
+    tasksArray = newArray;
+    displayArrayValues();
+    editbtn.style.display = "none";
+    add.style.display = "block";
+    input.value = "";
+    taskDescription.value = "";
+}
+
+function displayArrayValues() {
+    let htmltasks = '';
+    tasksArray.forEach(function(value, index) {
+        htmltasks += `<div class="homework">
+        <h3>${value.name}</h3>
+        <p>${value.description}</p>
+        <div style="display:flex;gap:10px;">
+        <img src="/delete.png" alt="" onclick="deletetask(${index})">
+        <img src="/pen.png" alt="" onclick="editTask(${index})">
+        </div>
+        </div>`;
+    });
+    tasks.innerHTML = htmltasks;
+}
+
+function addTask() {
+    if (input.value !== '') {
+        tasksArray.push({
+            name: input.value,
+            description: taskDescription.value
+        });
+        input.value = '';
+        taskDescription.value = '';
     }
-});
+    displayArrayValues();
+}
+
+add.addEventListener('click', addTask);
+editbtn.addEventListener('click', editTaskValue);
