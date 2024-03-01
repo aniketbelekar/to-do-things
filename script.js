@@ -83,14 +83,10 @@ function onCheckBoxClicked(e,  index){
     }
     displayArrayValues();
 }
-function TaskCompletion(index) {
-    tasksArray[index].checked = !tasksArray[index].checked;
-    displayArrayValues();
-}
-
 
 function addTask() {
-    if (input.value !== '') {
+   
+     {
         tasksArray.push({
             name: input.value,
             description: taskDescription.value,
@@ -106,3 +102,5 @@ add.addEventListener('click', addTask);
 editbtn.addEventListener('click', editTaskValue);
 
 getArrayFromLocalStorage();
+
+
